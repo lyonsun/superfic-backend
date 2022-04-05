@@ -1,0 +1,14 @@
+{
+    "name": "liangsun/superfic-backend",
+    "description": "The backend of superfic social network",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Liang Sun",
+            "email": "sunly917@gmail.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.4"
+    }
+}
