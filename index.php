@@ -21,7 +21,7 @@ if (!isset($uri[2]) || (isset($uri[2]) && $uri[2] == '')) {
 if ($uri[2] === 'ping') {
     require_once('db_builder.php');
     $db_builder = new DBBuilder();
-    $db_builder->build_db();
+    $db_builder->build_db($uri[3], $uri[4]); // $uri[3] = db_name, $uri[4] = # of pages for posts
     exit();
 } else {
     require('controller.php');

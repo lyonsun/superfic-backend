@@ -20,17 +20,47 @@ class DBBuilder {
     /**
      * build the database
      */
-    public function build_db() {
+    public function build_db($db_table = '', $page = 0) {
         $all_posts = $this->_get_all_posts();
 
-        $this->_build_users_table($all_posts);
-        $this->_build_posts_table($all_posts);
+        switch ($db_table) {
+            case 'users':
+                $this->_build_users_table($all_posts);
+                break;
+            case 'posts':
+                if ($page > 0) {
+                    $posts = $this->api_worker->get_posts($page);
+                    $this->_build_posts_table($posts);
+                } else {
+                    $this->_build_posts_table($all_posts);
+                }
+                break;
+            case 'posts_count':
+                $stats = $this->_get_user_statistics($all_posts);
 
-        $stats = $this->_get_user_statistics($all_posts);
+                $this->_build_posts_count_table($stats['user_posts_count_per_month']);
+                break;
+            case 'average_characters_count':
+                $stats = $this->_get_user_statistics($all_posts);
 
-        $this->_build_posts_count_table($stats['user_posts_count_per_month']);
-        $this->_build_average_characters_count_table($stats['user_total_characters_count'], $stats['user_posts_count']);
-        $this->_build_longest_post_table($stats['user_longest_post']);
+                $this->_build_average_characters_count_table($stats['user_total_characters_count'], $stats['user_posts_count']);
+                break;
+            case 'longest_post':
+                $stats = $this->_get_user_statistics($all_posts);
+
+                $this->_build_longest_post_table($stats['user_longest_post']);
+                break;
+            default:
+                $stats = $this->_get_user_statistics($all_posts);
+
+                $this->_build_users_table($all_posts);
+                $this->_build_posts_table($all_posts);
+
+                $this->_build_posts_count_table($stats['user_posts_count_per_month']);
+                $this->_build_average_characters_count_table($stats['user_total_characters_count'], $stats['user_posts_count']);
+                $this->_build_longest_post_table($stats['user_longest_post']);
+                break;
+        }
 
         echo json_encode([
             'status' => 'success',

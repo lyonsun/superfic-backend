@@ -7,19 +7,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
-# Create database superfic
-# ------------------------------------------------------------
-
-CREATE DATABASE IF NOT EXISTS `superfic`;
-
-
-
-# Select database superfic
-# ------------------------------------------------------------
-
-USE `superfic`;
-
-
 
 # Dump of table average_characters_count
 # ------------------------------------------------------------
